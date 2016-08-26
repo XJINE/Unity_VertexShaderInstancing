@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 4d1d6e6b3707b3c479c54da495898c95
+timeCreated: 1472194644
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - simpleInstancingShader: {fileID: 4800000, guid: 9e9f7be71ae800740bf1d5b4ae990978,
+      type: 3}
+  - instancingTargetMesh: {fileID: 10202, guid: 0000000000000000e000000000000000,
+      type: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

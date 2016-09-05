@@ -46,6 +46,12 @@
             // ------------------------------------------------------------------------------------
             // VertexShader
             // ------------------------------------------------------------------------------------
+            // スクリプト (CPU) 側 の DrawProcedual で指定された数だけ繰り返される。
+            // Graphics.DrawProcedural(MeshTopology.Triangles,
+            //                         this.instancingTargetMesh.triangles.Length,
+            //                         this.numOfInstances);
+            // SV_VertexID には 0 ~ this.instancingTargetMesh.triangles.Length,
+            // SV_InstanceID には 0 ~ this.numOfInstances の ID がそれぞれ与えられる。
 
             vertexOutput vertexShader (appdata input,
                                        uint vertexID : SV_VertexID,

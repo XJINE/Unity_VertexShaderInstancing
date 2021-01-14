@@ -2,14 +2,12 @@
 using System.Linq;
 using System.Runtime.InteropServices;
 
-public class SimpleInstancing : MonoBehaviour
+public class VertexShaderInstancing : MonoBehaviour
 {
-    public Shader simpleInstancingShader;
+    public Material material;
+    public Mesh     instancingTargetMesh;
+    public int      numOfInstances;
 
-    public Mesh instancingTargetMesh;
-    public int numOfInstances;
-
-    private Material material;
     private ComputeBuffer vertexBuffer;
 
     void Start()
@@ -17,12 +15,11 @@ public class SimpleInstancing : MonoBehaviour
         Vector3[] vertices = instancingTargetMesh.triangles
             .Select(i => instancingTargetMesh.vertices[i]).ToArray();
 
-        this.vertexBuffer = new ComputeBuffer
-            (this.instancingTargetMesh.triangles.Length, Marshal.SizeOf(typeof(Vector3)));
-        this.vertexBuffer.SetData(vertices);
+        vertexBuffer = new ComputeBuffer
+            (instancingTargetMesh.triangles.Length, Marshal.SizeOf(typeof(Vector3)));
+        vertexBuffer.SetData(vertices);
 
-        this.material = new Material(this.simpleInstancingShader);
-        this.material.SetBuffer("_VertexBuffer", this.vertexBuffer);
+        material.SetBuffer("_VertexBuffer", vertexBuffer);
     }
 
     void OnRenderObject()
@@ -35,15 +32,15 @@ public class SimpleInstancing : MonoBehaviour
         //               インスタンス数*実行回数)
         // MeshTopology は LINE など線を描画する目的などに変更することができます。
 
-        this.material.SetPass(0);
-        Graphics.DrawProcedural(MeshTopology.Triangles,
-                                this.instancingTargetMesh.triangles.Length,
-                                this.numOfInstances);
+        material.SetPass(0);
+
+        Graphics.DrawProceduralNow(MeshTopology.Triangles,
+                                instancingTargetMesh.triangles.Length,
+                                numOfInstances);
     }
 
     void OnDestroy()
     {
-        DestroyImmediate(this.material);
-        this.vertexBuffer.Release();
+        vertexBuffer.Release();
     }
 }

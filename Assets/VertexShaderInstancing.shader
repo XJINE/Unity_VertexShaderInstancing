@@ -1,4 +1,4 @@
-﻿Shader "Custom/Unlit/SimpleInstancing"
+﻿Shader "VertexShaderInstancing"
 {
     Properties
     {
@@ -70,7 +70,7 @@
                 // 一般的なバーテックスシェーダと同じように処理します。
 
                 vertexOutput output;
-                output.vertex = mul(UNITY_MATRIX_MVP, input.vertex);
+                output.vertex = UnityObjectToClipPos(input.vertex);
                 output.uv = TRANSFORM_TEX(input.uv, _MainTex);
                 output.color = half4(1, 0, 0, 1);
 
